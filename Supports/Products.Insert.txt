@@ -104,4 +104,20 @@ Setup Redis on docker container
 - Nuget Packages
 	* Install-Package Microsoft.Extensions.Caching.StackExchangeRedis
 	Update-Package ProjectName Basket.API   -- Update any updates on the nueget packages
+
+
+-When we convert out basket project into container we use redis:alpine version because it is lighter and fast.
+
+Portainer: (portainer.io)
+----------
+- It is a open source container management tool. 
+- It is used to manage environments, deploy applications, monitor app performance and triage problem
+- Can manage Kubernetes, Docker, Docker Swarm, Azure ACI and Edge environments
+
+Url : portainer.readthedocs.io/en/stable/deployment.html
+	https://docs.portainer.io/v/ce-2.11/start/intro
 	
+	1. docker pull portainer/portainer-ce
+	2. 
+ 
+ 

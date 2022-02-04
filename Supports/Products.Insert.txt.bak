@@ -95,3 +95,26 @@ Setup Redis on docker container
 - docker pull redis
 - docker run -d -p 6379:6379 --name aspnetrun-redis redis
 - docker exec -it aspnetrun-redis /bin/bash
+- redis-cli     -> it opens redis command line tool
+- If you give ping then redis container, you will Pong response
+- Redsi Commands
+	* set key value  -> set a key as key and value as "name"
+	* get key   -> display the value for the key key
+	* set name Newman   - Key:name, Value:Newman
+- Nuget Packages
+	* Install-Package Microsoft.Extensions.Caching.StackExchangeRedis
+	Update-Package ProjectName Basket.API   -- Update any updates on the nueget packages
+
+
+-When we convert out basket project into container we use redis:alpine version because it is lighter and fast.
+
+Portainer: (portainer.io)
+----------
+- It is a open source container management tool. 
+- It is used to manage environments, deploy applications, monitor app performance and triage problem
+- Can manage Kubernetes, Docker, Docker Swarm, Azure ACI and Edge environments
+
+Url : portainer.readthedocs.io/en/stable/deployment.html
+	https://docs.portainer.io/v/ce-2.11/start/intro
+ 
+ 
