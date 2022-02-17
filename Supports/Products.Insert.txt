@@ -120,4 +120,24 @@ Url : portainer.readthedocs.io/en/stable/deployment.html
 	1. docker pull portainer/portainer-ce
 	2. 
  
- 
+
+pgAdmin : is the most popular and feature rich open source administration and development plateform for PostgresSQL.
+
+CREATE TABLE Coupon(
+	ID SERIAL 	PRIMARY KEY NOT NULL,
+	ProductName	VARCHAR(24) NOT NULL,
+	Description	TEXT,
+	Amount 		INT
+);
+
+INSERT INTO Coupon(productname, description, amount) VALUES('IPhone X', 'IPhone Discount', 150);
+INSERT INTO Coupon(productname, description, amount) VALUES('Samsung 10', 'Somsung 10 Discount', 100);
+
+
+DiscountApi
+--------------
+Nuget Packages
+	- Npgsql - used to connect postgress db from .net
+	- Dapper - ORM
+
+- Update-Package -ProjectName Discount.API  -- this will update all nuget packages if it has any latest version

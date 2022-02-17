@@ -116,5 +116,19 @@ Portainer: (portainer.io)
 
 Url : portainer.readthedocs.io/en/stable/deployment.html
 	https://docs.portainer.io/v/ce-2.11/start/intro
+	
+	1. docker pull portainer/portainer-ce
+	2. 
  
- 
+
+pgAdmin : is the most popular and feature rich open source administration and development plateform for PostgresSQL.
+
+CREATE TABLE Coupon(
+	ID SERIAL 	PRIMARY KEY NOT NULL,
+	ProductName	VARCHAR(24) NOT NULL,
+	Description	TEXT,
+	Amount 		INT
+);
+
+INSERT INTO Coupon(productname, description, amount) VALUES('IPhone X', 'IPhone Discount', 150);
+INSERT INTO Coupon(productname, description, amount) VALUES('Samsung 10', 'Somsung 10 Discount', 100);
