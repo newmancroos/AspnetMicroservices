@@ -39,7 +39,7 @@ https://github.com/mehmetozkaya/AspnetMicroservices/tree/main/src/Services/Catal
 - Dockerfile within the project has the configuration details to pull neccessary docker image to setup the environment,
 	restore, compile and publish the project into the docker image
 
-	
+
 	
  docker-compose.yml
  ------------------
@@ -82,11 +82,28 @@ services:
 
 
 
+----------------------------------------Docker related commands------------------------------------
+- upload to docker and run
 
-- Stop and remove all the container and images
 - run docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
 
+stop & remove all docker container
+ - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down
+ 
 
+- docker stop <someletters>  - to stop a container
+- docker rm <someletters> - to remove a container
+- docker rmi <someletters> - remove an image
+- docker ps  - display all running container
+- docker ps -a   - display running and stopped containers
+- docker images   -display all dpocker images
+- docker ps -aq     - stop all container
+- docker stop $(docker ps -aq)   - stop all containers
+- docker rm $(docker ps -aq)  - rremove all containers
+- docker rmi $(docker image -q)
+- docker system prune - remove all unnamed images
+
+--------------------------------------------------------------------------------------------------------
 mongo client :
 docker run -d -p 3000:3000 mongoclient/mongoclient
 
@@ -141,3 +158,66 @@ Nuget Packages
 	- Dapper - ORM
 
 - Update-Package -ProjectName Discount.API  -- this will update all nuget packages if it has any latest version
+
+
+- We can write extension method for program -> host so that we can get the services from dependency container and run it as bootstrap
+
+ex.
+	public static class HostExtensions
+    {
+        public static IHost MigrateDatabase<TContext>(this IHost host, int? retry = 0)
+        {
+            int retryForAvailability = retry.Value;
+
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    var configuration = services.GetService<IConfiguration>();
+            //}
+
+            //From C#8
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var configuration = services.GetService<IConfiguration>();
+            var logger = services.GetService<ILogger>();
+
+            try
+            {
+                logger.LogInformation("Migrating postgressql database");
+
+                using var connection = new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+                connection.Open();
+
+                using var command = new NpgsqlCommand
+                {
+                    Connection = connection
+                };
+                command.CommandText = "DROP TABLE IF EXISTS Coupon";
+                command.ExecuteNonQuery();
+
+                command.CommandText = @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY, ProductName VARCHAR(24) NOT NULL, Description TEXT, Amount INT)";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "INSERT INTO Coupon(ProductName, Description, Amount) VALUES('IPhone X', 'IPhone Discount', 150)";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "INSERT INTO Coupon(ProductName, Description, Amount) VALUES('Samsung 10', 'Samsung Discount', 100)";
+                command.ExecuteNonQuery();
+
+                logger.LogInformation("Migrated postgressql database");
+
+            }
+            catch (NpgsqlException ex)
+            {
+                logger.LogError(ex, "An error occured while migrating the postgresql database");
+
+                if (retryForAvailability < 50)
+                {
+                    retryForAvailability++;
+                    System.Threading.Thread.Sleep(2000);
+                    MigrateDatabase<TContext>(host, retryForAvailability);
+                }
+            }
+            return host;
+        }
+    }
