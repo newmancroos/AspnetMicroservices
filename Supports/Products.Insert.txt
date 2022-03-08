@@ -221,3 +221,10 @@ ex.
             return host;
         }
     }
+	
+	
+	
+GRPC
+-----
+- Direct synchronaize communication between microservices
+- Grpc uses HTTP2 protocal to exposing services

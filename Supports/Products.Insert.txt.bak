@@ -87,7 +87,7 @@ services:
 
 - run docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
 
-stop all docker container
+stop & remove all docker container
  - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down
  
 
@@ -221,3 +221,8 @@ ex.
             return host;
         }
     }
+	
+	
+	
+GRPC
+-----
