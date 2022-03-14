@@ -228,3 +228,14 @@ GRPC
 -----
 - Direct synchronaize communication between microservices
 - Grpc uses HTTP2 protocal to exposing services
+
+
+
+https://clicks.att.com/OCT/eTrac?EMAIL_ID=1851221569&finalURL=https://www.att.com/olam/loginAction.olamexecute?source=EACQM0bdy0000000E&wtExtndSource=CBIL_C001EH
+
+
+Add Grpc service to a project
+1. Select Add Connected service by right click the project
+2. Add Grpc service and select the project proto file and select client
+3. Build the project so proto file will be added to the obj folder as client
+4. Register that client file in the programe and specify the url of grps service
