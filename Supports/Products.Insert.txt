@@ -239,3 +239,7 @@ Add Grpc service to a project
 2. Add Grpc service and select the project proto file and select client
 3. Build the project so proto file will be added to the obj folder as client
 4. Register that client file in the programe and specify the url of grps service
+
+
+
+Send Email : SendGrid.com
